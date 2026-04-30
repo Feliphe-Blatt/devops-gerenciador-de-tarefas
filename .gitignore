@@ -1,0 +1,51 @@
+﻿# Environment
+.env
+.env.*
+!config/env/.env.example
+
+# Temporary files
+tmp/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Logs
+*.log
+
+# Local proposal/draft files not part of the repository deliverable
+
+/entrega-inicial.md
+/entrega-inicial-email.md
+/inicial.md
+/primeira.md
+/proposta.md
+/AGENTS.md
+
+
+# Core workspace folders requested for local-only use
+/config/
+/docs/
+/figma/
+/harness/
+/instructions/
+/legacy/
+/scripts/
+/skills/
+/sprints/
+/state/
+
+# Local editor and AI assistant config
+.vscode/
+.vscode-test/
+.idea/
+.cursor/
+.continue/
+.claude/
+.windsurf/
+.copilot/
+*.code-workspace
+
+# OS artifacts
+Thumbs.db
+.DS_Store
