@@ -1,0 +1,50 @@
+pipeline {
+  agent any
+
+  options {
+    timestamps()
+  }
+
+  environment {
+    JAVA_VERSION = '17'
+    NODE_VERSION = '20'
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
+    }
+
+    stage('Backend') {
+      steps {
+        dir('backend') {
+          sh 'mvn clean test'
+        }
+      }
+    }
+
+    stage('Frontend') {
+      steps {
+        dir('frontend') {
+          sh 'npm ci'
+          sh 'npm run build'
+        }
+      }
+    }
+
+    stage('SonarQube') {
+      steps {
+        echo 'Analise SonarQube preparada para o projeto final.'
+        echo 'Configurar sonar-project.properties e credenciais do servidor SonarQube no Jenkins.'
+      }
+    }
+  }
+
+  post {
+    always {
+      echo 'Pipeline finalizada.'
+    }
+  }
+}

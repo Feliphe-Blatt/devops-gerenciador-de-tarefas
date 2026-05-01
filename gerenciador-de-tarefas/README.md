@@ -10,6 +10,29 @@ Aplicacao web simples para registrar, acompanhar e concluir atividades do dia a 
 - Infraestrutura: Docker e Docker Compose
 - Qualidade e CI/CD: GitHub, Jenkins e SonarQube
 
+## Fluxo Git
+- `main`: branch de entrega consolidada.
+- `develop`: branch de integracao e validacao entre etapas.
+- `feature/*`: branches temporarias por workplan ou funcionalidade.
+
+Regra de uso:
+1. cada workplan e executado em uma branch `feature/*` propria;
+2. ao fechar o workplan, o commit fica na branch da feature;
+3. a feature e mesclada em `develop` para validacao;
+4. quando a fase estiver consolidada, `develop` e mesclada em `main`.
+
+## CI/CD inicial
+- `Jenkinsfile`: pipeline base com etapas de checkout, backend, frontend e SonarQube.
+- `sonar-project.properties`: configuracao inicial de analise para backend e frontend.
+- A analise de qualidade deve bloquear o fluxo antes do merge em `develop` quando houver falha.
+
+## API e integracao
+- `GET /api/tasks`: lista as tarefas cadastradas.
+- `POST /api/tasks`: cria uma nova tarefa.
+- `PUT /api/tasks/{id}`: atualiza uma tarefa existente.
+- `DELETE /api/tasks/{id}`: remove uma tarefa.
+- O frontend consome a API via `NEXT_PUBLIC_API_URL`, que no compose aponta para `http://localhost:8080`.
+
 ## Estrutura do projeto
 - /frontend - Interface (Next.js)
 - /backend - API (Spring Boot)
