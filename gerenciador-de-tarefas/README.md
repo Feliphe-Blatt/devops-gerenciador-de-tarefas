@@ -26,6 +26,13 @@ Regra de uso:
 - `sonar-project.properties`: configuracao inicial de analise para backend e frontend.
 - A analise de qualidade deve bloquear o fluxo antes do merge em `develop` quando houver falha.
 
+## API e integracao
+- `GET /api/tasks`: lista as tarefas cadastradas.
+- `POST /api/tasks`: cria uma nova tarefa.
+- `PUT /api/tasks/{id}`: atualiza uma tarefa existente.
+- `DELETE /api/tasks/{id}`: remove uma tarefa.
+- O frontend consome a API via `NEXT_PUBLIC_API_URL`, que no compose aponta para `http://localhost:8080`.
+
 ## Estrutura do projeto
 - /frontend - Interface (Next.js)
 - /backend - API (Spring Boot)
