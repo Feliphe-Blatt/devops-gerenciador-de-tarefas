@@ -8,6 +8,7 @@ pipeline {
   environment {
     JAVA_VERSION = '17'
     NODE_VERSION = '20'
+    MAVEN_OPTS = '-Dmaven.repo.local=.m2/repository'
   }
 
   stages {
@@ -17,7 +18,7 @@ pipeline {
       }
     }
 
-    stage('Backend') {
+    stage('Backend Teste e Coverage') {
       steps {
         dir('backend') {
           sh 'mvn clean test'
@@ -25,25 +26,28 @@ pipeline {
       }
     }
 
-    stage('Frontend') {
+    stage('Frontend Teste e Build') {
       steps {
         dir('frontend') {
           sh 'npm ci'
+          sh 'npm run test:coverage'
           sh 'npm run build'
         }
       }
     }
 
-    stage('SonarQube') {
+    stage('SonarQube Analysis') {
       steps {
-        echo 'Analise SonarQube preparada para o projeto final.'
-        echo 'Configurar sonar-project.properties e credenciais do servidor SonarQube no Jenkins.'
+        withSonarQubeEnv('SonarQube') {
+          sh 'sonar-scanner -Dproject.settings=sonar-project.properties'
+        }
       }
     }
   }
 
   post {
     always {
+      archiveArtifacts artifacts: 'backend/target/site/jacoco/**/*, frontend/coverage/**/*', allowEmptyArchive: true
       echo 'Pipeline finalizada.'
     }
   }
