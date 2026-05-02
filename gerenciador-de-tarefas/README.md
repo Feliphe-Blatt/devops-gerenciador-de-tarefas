@@ -21,6 +21,11 @@ Regra de uso:
 3. a feature e mesclada em `develop` para validacao;
 4. quando a fase estiver consolidada, `develop` e mesclada em `main`.
 
+## CI/CD inicial
+- `Jenkinsfile`: pipeline base com etapas de checkout, backend, frontend e SonarQube.
+- `sonar-project.properties`: configuracao inicial de analise para backend e frontend.
+- A analise de qualidade deve bloquear o fluxo antes do merge em `develop` quando houver falha.
+
 ## Estrutura do projeto
 - /frontend - Interface (Next.js)
 - /backend - API (Spring Boot)
