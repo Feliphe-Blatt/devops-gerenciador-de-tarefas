@@ -1,101 +1,100 @@
-# Ecossistema Codex Beevent
+# Gerenciador de Tarefas e Produtividade
 
-Este repositório concentra o ecossistema operacional do Codex para o contexto Beevent: onboarding, manuais, regras operacionais, skills, configuração, estado operacional e memória de sprint.
+## Descrição do projeto
+Aplicação web simples para registrar, acompanhar e concluir atividades do dia a dia. O projeto foi desenhado para aplicar de forma prática versionamento de código, conteinerização, orquestração, automação de pipeline e análise de qualidade em um fluxo DevOps enxuto.
 
-## O que este repositório é
+## Tema da aplicação
+O tema escolhido é um gerenciador de tarefas e produtividade. O sistema permite organizar atividades em uma lista única, acompanhar o status de cada item e manter uma visão clara do que precisa ser feito, do que está em andamento e do que já foi concluído.
 
-- a base reutilizável do ecossistema
-- a documentação oficial do uso do Codex neste contexto
-- a casa das `instructions/`, `skills/`, `scripts/`, `config/`, `state/` e `sprints/`
+## Objetivo da aplicação
+O objetivo do sistema é centralizar tarefas pessoais ou acadêmicas em uma interface simples, reduzindo a dispersão entre anotações soltas e facilitando o acompanhamento do progresso.
 
-## O que este repositório não é
+## Escopo em visão macro
+O sistema permite cadastrar, listar, editar, alterar status e excluir tarefas. A proposta foi mantida deliberadamente simples para valorizar a aplicação dos conceitos de DevOps exigidos na disciplina, sem ampliar o escopo para recursos desnecessários como autenticação, perfis ou permissões.
 
-- ele não substitui os repositórios de produto
-- ele não embute os repositórios de produto
-- os repositórios novos ficam fisicamente em `beevent-platform/backend/`, `beevent-platform/backoffice/` e `beevent-platform/web/`; os nomes `beevent-backend`, `beevent-backoffice` e `beevent-web` são aliases lógicos de stack
-- os repositórios legados (`backoffice/`, `beevent-back/`, `beevent-front/`) continuam como pastas irmãs no mesmo workspace quando forem usados
+## Principais funcionalidades
+- Criar tarefas com título, descrição e status.
+- Listar as tarefas cadastradas em uma interface web.
+- Editar tarefas existentes.
+- Alterar o status das tarefas entre pendente, em andamento e concluída.
+- Excluir tarefas quando não forem mais necessárias.
 
-## Estrutura principal
+## CRUD principal
+O CRUD principal do projeto é o gerenciamento de tarefas.
 
-```text
-ecossistema-codex-beevent/
-|-- README.md
-|-- AGENTS.md
-|-- docs/
-|-- instructions/
-|-- skills/
-|-- scripts/
-|-- config/
-|-- state/
-|-- sprints/
-|-- tmp/
-`-- legacy/
+- Create: criação de novas tarefas.
+- Read: listagem das tarefas cadastradas.
+- Update: edição dos dados e do status de uma tarefa.
+- Delete: remoção de tarefas do sistema.
+
+## Tecnologias utilizadas
+- Front-end: Next.js com TypeScript.
+- Back-end: Java com Spring Boot.
+- Banco de dados: PostgreSQL.
+- Infraestrutura: Docker e Docker Compose.
+- Qualidade e CI/CD: GitHub, Jenkins e SonarQube.
+
+## Justificativa das tecnologias
+- Next.js foi escolhido para entregar uma interface moderna, responsiva e com boa experiência de desenvolvimento.
+- TypeScript reduz erros de integração e melhora a previsibilidade do código do frontend.
+- Spring Boot simplifica a criação da API e da camada de negócio no backend.
+- PostgreSQL oferece persistência relacional estável e adequada para um CRUD estruturado.
+- Docker e Docker Compose tornam o ambiente reproduzível e facilitam a execução da stack completa.
+- Jenkins e SonarQube sustentam o fluxo de integração contínua e a validação de qualidade exigidos pela disciplina.
+
+## Fluxo Git
+- `main`: branch de entrega consolidada.
+- `develop`: branch de integração e validação entre etapas.
+- `feature/*`: branches temporárias por workplan ou funcionalidade.
+
+Regra de uso:
+1. cada workplan é executado em uma branch `feature/*` própria;
+2. ao fechar o workplan, o commit fica na branch da feature;
+3. a feature é mesclada em `develop` para validação;
+4. quando a fase estiver consolidada, `develop` é mesclada em `main`.
+
+## CI/CD inicial
+- `Jenkinsfile`: pipeline base com etapas de checkout, backend, frontend e SonarQube.
+- `sonar-project.properties`: configuração inicial de análise para backend e frontend.
+- A análise de qualidade deve bloquear o fluxo antes do merge em `develop` quando houver falha.
+
+## API e integração
+- `GET /api/tasks`: lista as tarefas cadastradas.
+- `POST /api/tasks`: cria uma nova tarefa.
+- `PUT /api/tasks/{id}`: atualiza uma tarefa existente.
+- `DELETE /api/tasks/{id}`: remove uma tarefa.
+- O frontend consome a API via `NEXT_PUBLIC_API_URL`, que no compose aponta para `http://localhost:8080`.
+
+## Estrutura do projeto
+- `/frontend` - interface Next.js.
+- `/backend` - API Spring Boot.
+- `/docker-compose.yml` - orquestração dos serviços.
+- `/Jenkinsfile` - pipeline inicial de integração contínua.
+- `/sonar-project.properties` - configuração inicial do SonarQube.
+
+## Como executar
+1. Instale Docker e Docker Compose.
+2. Na raiz do projeto, execute:
+
+```bash
+docker compose up -d --build
 ```
 
-## Documentos oficiais
+Para parar:
 
-- guia do ecossistema: `docs/guia-ecossistema.md`
-- guia de skills: `docs/guia-skills.md`
-- guia de eficiencia de tokens: `docs/guia-eficiencia-tokens.md`
-- configuração de ambiente: `docs/configuracao-ambiente.md`
-- instalação e bootstrap: `docs/instalacao-e-bootstrap.md`
-- índice da documentação: `docs/README.md`
-- apresentação oficial do ecossistema: `https://www.figma.com/deck/QmZJuRYNLhNZuUZnZgFY75/Feliphe-Blatt---Apresenta%C3%A7%C3%A3o-Ecossistema-Codex-Beevent?node-id=2-42&t=xFCRfSMyXxYYcQwp-1`
-- PDF oficial do ecossistema: `docs/pdf/GUIA-ECOSSISTEMA-CODEX-BEEVENT.pdf`
-- PDF oficial de skills: `docs/pdf/GUIA-SKILLS-CODEX-BEEVENT.pdf`
+```bash
+docker compose down
+```
 
-## Ordem de leitura recomendada
+## Comandos principais
+- `docker compose up -d --build` para subir a stack completa.
+- `docker compose down` para derrubar os containers.
+- `docker compose logs -f` para acompanhar os logs.
+- `cd frontend && npm run build` para validar o frontend localmente.
+- `cd backend && mvn test` para executar os testes do backend quando disponíveis.
 
-1. `README.md`
-2. `AGENTS.md`
-3. `instructions/workflow.md`
-4. `instructions/workflow-checklist.md`
-5. módulos em `instructions/workflow/`
-6. `docs/guia-ecossistema.md`
-7. `docs/guia-skills.md`
-8. `docs/guia-eficiencia-tokens.md`
-9. instruções de stack relevantes
-10. skills necessárias
+## Proposta inicial
+Consulte também [proposta-inicial.md](proposta-inicial.md) para a versão consolidada da proposta do projeto.
 
-## Repositórios Suportados
-
-- Novo Beevent:
-  - `beevent-backend`: alias lógico para `beevent-platform/backend`, backend Go
-  - `beevent-backoffice`: alias lógico para `beevent-platform/backoffice`, frontend administrativo Next.js/React/TypeScript
-  - `beevent-web`: alias lógico para `beevent-platform/web`, frontend público Next.js/React/TypeScript
-- Legado:
-  - `backoffice`
-  - `beevent-back`
-  - `beevent-front`
-
-A stack deve ser escolhida pelo repositório realmente afetado pela task. Não migre uma task para os repositórios novos quando o escopo continuar no legado.
-
-## Regra operacional de entrada
-
-Antes de qualquer implementação técnica, o fluxo padrão é:
-
-1. analisar a task
-2. atualizar o repositório afetado antes de criar branch; para `beevent-platform`, usar `git pull --ff-only --recurse-submodules origin main`
-3. apresentar o workplan antes de codar, mesmo se o pedido já autorizar executar
-4. explicitar repositório, módulos e arquivos prováveis
-5. oferecer abordagens quando houver decisão relevante
-6. executar por partes pequenas e verificáveis
-
-## Configuração rápida
-
-- exemplos de variáveis: `config/env/.env.example`
-- exemplos de paths locais: `config/paths/`
-- detalhes completos: `docs/configuracao-ambiente.md`
-
-## Scripts úteis
-
-- abrir task no padrão novo: `scripts/bootstrap-task.ps1`
-- preparar branches em submodules de produto: `scripts/prepare-product-task-repos.ps1`
-- finalizar commit/push/PR por repo/submodule: `scripts/finish-product-task-repos.ps1`
-- gerar handoff diario com commit/PR/branch por repo/submodule: `scripts/generate-product-handoff-report.ps1`
-- atualizar repositórios do workspace: `scripts/update-repos.ps1`
-- validar estrutura do ecossistema: `scripts/lint-ecosystem.ps1`
-
-## Regra de ouro
-
-`README.md` orienta a entrada. `docs/` explica. `instructions/` manda. `skills/` especializa. `state/` guarda o estado operacional. `tmp/` guarda apenas temporários.
+## Integrantes da equipe
+- Feliphe Sousa Blatt - desenvolvimento individual.

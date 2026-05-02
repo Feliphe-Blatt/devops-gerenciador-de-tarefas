@@ -1,5 +1,7 @@
 Proposta de Projeto - DevOps
 
+Aluno: Feliphe Sousa Blatt
+
 projeto: Gerenciador de Tarefas e Produtividade
 
 Objetivo do sistema (problema a ser resolvido):
